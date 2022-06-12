@@ -1,0 +1,124 @@
+<style>
+	.card-backdrop {
+    	background: transparent;
+    	backdrop-filter: none;
+	}
+	.card-backdrop-in {
+		pointer-events: none;
+	}
+</style>
+<template>
+	<div class="page">
+		<div class="navbar">
+			<div class="navbar-bg"></div>
+			<div class="navbar-inner sliding">
+				<div class="title">Prayer App</div>
+			</div>
+		</div>
+		<div class="page-content">
+			<div class="block">
+				<div class="card card-expandable">
+					<div class="card-content">
+						<div class="bg-color-red" style="height: 300px">
+							<div class="card-header text-color-white display-block">
+								Lambang Daerah
+					  			<br>
+					  			<small style="opacity: 0.7">( Provinsi )</small>
+							</div>
+							<a href="#" class="link card-close card-opened-fade-in color-black" style="position: absolute; right: 15px; top: 15px">
+								<i class="icon f7-icons">xmark_circle_fill</i>
+							</a>
+						</div>
+						<div class="card-content-padding">
+							<div class="list media-list">
+								<ul>
+									{{#each dataProvinsi}}
+									<li>
+										<div class="item-content">
+									  		<div class="item-media"><img src="{{this.url}}" width="44" /></div>
+									  		<div class="item-inner">
+												<div class="item-title-row">
+										  			<div class="item-title">{{this.title}}</div>
+												</div>
+												<div class="item-subtitle">Wikipedia</div>
+									  		</div>
+										</div>
+								  	</li>
+									{{/each}}
+								</ul>
+							</div>
+				  		</div>
+					</div>
+			  	</div>
+				  <div class="card card-expandable">
+					<div class="card-content">
+						<div class="bg-color-yellow" style="height: 300px">
+							<div class="card-header text-color-white display-block">
+								Lambang Daerah
+					  			<br>
+					  			<small style="opacity: 0.7">( Kabupaten/Kota )</small>
+							</div>
+							<a href="#" class="link card-close card-opened-fade-in color-black" style="position: absolute; right: 15px; top: 15px">
+								<i class="icon f7-icons">xmark_circle_fill</i>
+							</a>
+						</div>
+						<div class="card-content-padding">
+							<div class="list media-list">
+								<ul>
+									{{#each dataKabupaten}}
+									<li>
+										<div class="item-content">
+									  		<div class="item-media"><img src="{{this.url}}" width="44" /></div>
+									  		<div class="item-inner">
+												<div class="item-title-row">
+										  			<div class="item-title">{{this.title}}</div>
+												</div>
+												<div class="item-subtitle">Wikipedia</div>
+									  		</div>
+										</div>
+								  	</li>
+									{{/each}}
+								</ul>
+							</div>
+				  		</div>
+					</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+</template>
+<script>
+	export default{
+		mounted() {
+			var $this = this;
+			var app = this.$app;
+			var $$ = this.$$;
+			var self = this;
+		},
+		on: {
+			pageInit: function () {
+				var self = this;
+				var $this = this;
+				var app = this.$app;
+				var $$ = this.$$;
+
+				var responseProvinsi = new Array();
+				var responseKabupaten = new Array();
+
+				app.request.get('https://feriirawan-api.herokuapp.com/list/symbols/province/256', (data, status, xhr) => {
+					responseProvinsi = JSON.parse(data);
+					self.$setState({
+						dataProvinsi: responseProvinsi.lambang
+					});
+				});
+
+				app.request.get('https://feriirawan-api.herokuapp.com/list/symbols/regency/256', (data, status, xhr) => {
+					responseKabupaten = JSON.parse(data);
+					self.$setState({
+						dataKabupaten: responseKabupaten.lambang
+					});
+				});
+			},
+		},
+	}
+</script>
