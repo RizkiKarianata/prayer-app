@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to Prayer App! 👋 </h1>
 
-<!-- ![Prayer App](https://user-images.githubusercontent.com/52366240/173226951-ee7860aa-8b35-4a5e-81c5-94194f5499f4.png) -->
+![Prayer App](https://user-images.githubusercontent.com/52366240/173229374-46f83fc1-e51a-4cd8-8939-b90d2513aa51.png)
 
 <p align="center">Prayer App is an application that is used to display various collections of daily prayers. Built using Framework7. 💖 </p>
 
