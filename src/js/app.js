@@ -20,7 +20,7 @@ var app = new Framework7({
   component: App, // App main component
   id: 'io.framework7.myapp', // App bundle ID
   name: 'Prayer App', // App name
-  theme: 'ios', // Automatic theme detection
+  theme: 'auto', // Automatic theme detection
 
 
 
