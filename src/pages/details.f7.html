@@ -1,0 +1,57 @@
+<template>
+	<div class="page">
+		<div class="navbar">
+			<div class="navbar-bg"></div>
+			<div class="navbar-inner sliding">
+				<div class="left">
+					<a href="#" class="link back">
+						<i class="icon f7-icons if-not-md">arrow_left</i>
+						<i class="icon material-icons if-md">arrow_back</i>
+					</a>
+				</div>
+				{{#if data}}
+				<div class="title"><h4>{{data.doa}}</h4></div>
+				{{else}}
+				{{/if}}
+			</div>
+		</div>
+		{{#if data}}
+		<div class="page-content">
+            <div class="block block-strong">
+                <p class="noto-sans-arabic">{{data.ayat}}</p>
+                <p>{{data.latin}}</p>
+                <p><strong>Arti: </strong>{{data.artinya}}</p>
+            </div>
+		</div>
+		{{else}}
+		{{/if}}
+	</div>
+</template>
+<script>
+	export default {
+		mounted() {
+			var $this = this;
+			var app = this.$app;
+			var $$ = this.$$;
+			var self = this;
+		},
+		on: {
+			pageInit: function () {
+				var self = this;
+				var $this = this;
+				var app = this.$app;
+				var $$ = this.$$;
+
+                var id = this.$route.params.id;
+				var response = new Array();
+
+				app.request.get('https://doa-doa-api-ahmadramadhan.fly.dev/api/'+id, (data, status, xhr) => {
+					response = JSON.parse(data);
+					self.$setState({
+						data: response[0]
+					});
+				});
+			},
+		},
+	}
+</script>

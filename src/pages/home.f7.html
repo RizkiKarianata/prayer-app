@@ -1,12 +1,3 @@
-<style>
-	.card-backdrop {
-    	background: transparent;
-    	backdrop-filter: none;
-	}
-	.card-backdrop-in {
-		pointer-events: none;
-	}
-</style>
 <template>
 	<div class="page">
 		<div class="navbar">
@@ -16,73 +7,24 @@
 			</div>
 		</div>
 		<div class="page-content">
-			<div class="block">
-				<div class="card card-expandable">
-					<div class="card-content">
-						<div class="bg-color-red" style="height: 300px">
-							<div class="card-header text-color-white display-block">
-								Lambang Daerah
-					  			<br>
-					  			<small style="opacity: 0.7">( Provinsi )</small>
-							</div>
-							<a href="#" class="link card-close card-opened-fade-in color-black" style="position: absolute; right: 15px; top: 15px">
-								<i class="icon f7-icons">xmark_circle_fill</i>
-							</a>
-						</div>
-						<div class="card-content-padding">
-							<div class="list media-list">
-								<ul>
-									{{#each dataProvinsi}}
-									<li>
-										<div class="item-content">
-									  		<div class="item-media"><img src="{{this.url}}" width="44" /></div>
-									  		<div class="item-inner">
-												<div class="item-title-row">
-										  			<div class="item-title">{{this.title}}</div>
-												</div>
-												<div class="item-subtitle">Wikipedia</div>
-									  		</div>
-										</div>
-								  	</li>
-									{{/each}}
-								</ul>
-							</div>
-				  		</div>
-					</div>
-			  	</div>
-				  <div class="card card-expandable">
-					<div class="card-content">
-						<div class="bg-color-yellow" style="height: 300px">
-							<div class="card-header text-color-white display-block">
-								Lambang Daerah
-					  			<br>
-					  			<small style="opacity: 0.7">( Kabupaten/Kota )</small>
-							</div>
-							<a href="#" class="link card-close card-opened-fade-in color-black" style="position: absolute; right: 15px; top: 15px">
-								<i class="icon f7-icons">xmark_circle_fill</i>
-							</a>
-						</div>
-						<div class="card-content-padding">
-							<div class="list media-list">
-								<ul>
-									{{#each dataKabupaten}}
-									<li>
-										<div class="item-content">
-									  		<div class="item-media"><img src="{{this.url}}" width="44" /></div>
-									  		<div class="item-inner">
-												<div class="item-title-row">
-										  			<div class="item-title">{{this.title}}</div>
-												</div>
-												<div class="item-subtitle">Wikipedia</div>
-									  		</div>
-										</div>
-								  	</li>
-									{{/each}}
-								</ul>
-							</div>
-				  		</div>
-					</div>
-			  	</div>
+			{{#if dataDoaRandom}}
+			<div class="card card-outline">
+				<div class="card-header" style="text-transform: capitalize;">{{dataDoaRandom.doa}}</div>
+				<div class="card-content card-content-padding">
+					<p class="noto-sans-arabic">{{dataDoaRandom.ayat}}</p>
+					<p>{{dataDoaRandom.latin}}</p>
+					<p><strong>Arti: </strong>{{dataDoaRandom.artinya}}</p>
+				</div>
+			</div>
+			{{/else}}
+			{{/if}}
+			<div class="block-title">Daftar Doa - Doa Harian</div>
+			<div class="list links-list">
+				<ul>
+					{{#each dataDoaAll}}
+					<li><a href="/details/{{this.id}}/" style="text-transform: capitalize;">{{this.doa}}</a></li>
+					{{/each}}
+			  	</ul>
 			</div>
 		</div>
 	</div>
@@ -102,20 +44,20 @@
 				var app = this.$app;
 				var $$ = this.$$;
 
-				var responseProvinsi = new Array();
-				var responseKabupaten = new Array();
+				var responseDoaRandom = new Array();
+				var responseDoaAll = new Array();
 
-				app.request.get('https://feriirawan-api.herokuapp.com/list/symbols/province/256', (data, status, xhr) => {
-					responseProvinsi = JSON.parse(data);
+				app.request.get('https://doa-doa-api-ahmadramadhan.fly.dev/api/doa/v1/random', (data, status, xhr) => {
+					responseDoaRandom = JSON.parse(data);
 					self.$setState({
-						dataProvinsi: responseProvinsi.lambang
+						dataDoaRandom: responseDoaRandom[0]
 					});
 				});
 
-				app.request.get('https://feriirawan-api.herokuapp.com/list/symbols/regency/256', (data, status, xhr) => {
-					responseKabupaten = JSON.parse(data);
+				app.request.get('https://doa-doa-api-ahmadramadhan.fly.dev/api', (data, status, xhr) => {
+					responseDoaAll = JSON.parse(data);
 					self.$setState({
-						dataKabupaten: responseKabupaten.lambang
+						dataDoaAll: responseDoaAll
 					});
 				});
 			},
