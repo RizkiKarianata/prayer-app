@@ -39,7 +39,7 @@
     "@babel/preset-env": "^7.10.4",
     "@babel/runtime": "^7.10.5",
     "babel-loader": "^8.1.0",
-    "chalk": "^4.1.0",
+    "chalk": "^5.0.1",
     "copy-webpack-plugin": "^6.0.3",
     "cpy-cli": "^3.1.1",
     "cross-env": "^7.0.3",
